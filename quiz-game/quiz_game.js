@@ -1,4 +1,6 @@
-// Create a function constructor called Question
+// to protect or isolate our code from other users, we convert it to a self-invoking function
+(function() {
+    // Create a function constructor called Question
 
 var Question = function(question, options, answer) {
     this.question = question;
@@ -23,13 +25,13 @@ var quest10 = new Question('react is a library of javascript?', ['true','false',
 
 // store the questions in an array
 var questArr = [quest1, quest2, quest3, quest4, quest5, quest6, quest7, quest8, quest9, quest10];
+var score = 0;
 
 //write a method for the question object to generate a random question and the possible answers on the console
 Question.prototype.genQuestion = function() {
     
     rand = Math.ceil(Math.random() * 10);
     
-    console.log(rand);
     if (rand) {
         console.log(questArr[(rand - 1)].question);
         for (let i = 0; i < questArr[(rand - 1)].options.length; i++) {
@@ -41,15 +43,31 @@ Question.prototype.genQuestion = function() {
 
 //use the prompt function to to ask the user for the correct answer
 Question.prototype.correctAnswer = function() {
-    let q = prompt(questArr[(rand - 1)].question);
-
+    var q = prompt(questArr[(rand - 1)].question);
     if (q == questArr[(rand - 1)].answer) {
+        score += 1;
         console.log('Correct Answer!');
+        console.log('Your current score is: '+ score)
+        console.log('--------------------------------')
+    }else if(q == 'exit') {
+        start.finish();
     }else{
-        console.log('Wrong Answer!');
+        console.log('Wrong Answer!, Try again');
+        console.log('Your current score is: '+ score);
+        prompt(questArr[(rand - 1)].question);
     }
-    start.genQuestion();
+    this.genQuestion();
 }
+
+// write a function to exit the game when the user types 'exit' instead of the answer
+Question.prototype.finish = function() {
+    if (q == 'exit') {
+        prompt(null);
+    }
+}
+
 
 //question should be generated when page loads
 start.genQuestion();
+})();
+
