@@ -44,27 +44,27 @@ Question.prototype.genQuestion = function() {
 //use the prompt function to to ask the user for the correct answer
 Question.prototype.correctAnswer = function() {
     var q = prompt(questArr[(rand - 1)].question);
-    if (q == questArr[(rand - 1)].answer) {
+
+    if (q === 'exit') {
+        return;
+
+    } else if (q === questArr[(rand - 1)].answer) {
+
         score += 1;
         console.log('Correct Answer!');
-        console.log('Your current score is: '+ score)
-        console.log('--------------------------------')
-    }else if(q == 'exit') {
-        start.finish();
-    }else{
+        console.log('Your current score is: '+ score);
+        console.log('--------------------------------');
+
+    } else {
+
         console.log('Wrong Answer!, Try again');
         console.log('Your current score is: '+ score);
         prompt(questArr[(rand - 1)].question);
+
     }
     this.genQuestion();
 }
 
-// write a function to exit the game when the user types 'exit' instead of the answer
-Question.prototype.finish = function() {
-    if (q == 'exit') {
-        prompt(null);
-    }
-}
 
 
 //question should be generated when page loads
